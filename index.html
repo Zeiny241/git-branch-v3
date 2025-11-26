@@ -1,11 +1,616 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าแรก</title>
+    <title>แผนกวิชาชีพ เทคโนโลยีคอมพิวเตอร์</title>
+    <style>
+        :root {
+            --primary-gray: #808080;
+            --light-gray: #f5f5f5;
+            --medium-gray: #d3d3d3;
+            --dark-gray: #696969;
+            --text-dark: #333333;
+            --accent-color: #4a6fa5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-gray), var(--dark-gray));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: rotate(15deg);
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--primary-gray);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        
+        nav {
+            background-color: var(--dark-gray);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav li {
+            margin: 0 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        section {
+            margin-bottom: 3rem;
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: var(--dark-gray);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--medium-gray);
+            position: relative;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .intro {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .intro-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .intro-image {
+            flex: 1;
+            min-width: 300px;
+            height: 300px;
+            background-color: var(--medium-gray);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark-gray);
+            font-size: 1.2rem;
+            overflow: hidden;
+        }
+        
+        .intro-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .course-card {
+            background-color: var(--light-gray);
+            border-left: 4px solid var(--primary-gray);
+            padding: 1.5rem;
+            border-radius: 4px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            z-index: 1;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-left-color: var(--accent-color);
+        }
+        
+        .course-card h3 {
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .course-card p {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .facilities {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .facility {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .facility:hover {
+            transform: translateY(-5px);
+        }
+        
+        .facility i {
+            font-size: 2.5rem;
+            color: var(--primary-gray);
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .facility:hover i {
+            color: var(--accent-color);
+        }
+        
+        .facility h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+        }
+        
+        .teachers {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .teacher {
+            text-align: center;
+        }
+        
+        .teacher-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: var(--medium-gray);
+            margin: 0 auto 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 3rem;
+            overflow: hidden;
+            border: 3px solid var(--primary-gray);
+            transition: border-color 0.3s ease;
+        }
+        
+        .teacher:hover .teacher-img {
+            border-color: var(--accent-color);
+        }
+        
+        .teacher-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .contact-details {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .contact-details p {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .contact-details i {
+            margin-right: 10px;
+            margin-top: 3px;
+            min-width: 20px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--medium-gray);
+            color: white;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+        }
+        
+        .contact-form button {
+            background-color: var(--primary-gray);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            font-weight: 600;
+        }
+        
+        .contact-form button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            background-color: var(--dark-gray);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-gray);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, background-color 0.3s;
+            z-index: 99;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 0.5rem 0;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .intro, .contact-info {
+                flex-direction: column;
+            }
+            
+            .facilities, .teachers {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-laptop-code"></i>
+            </div>
+            <div>
+                <h1>แผนกวิชาชีพ เทคโนโลยีคอมพิวเตอร์</h1>
+                <p class="tagline">พัฒนาทักษะดิจิทัล สร้างอนาคตที่มั่นคง</p>
+            </div>
+        </div>
+    </header>
     
+    <nav>
+        <ul>
+            <li><a href="#about">เกี่ยวกับแผนก</a></li>
+            <li><a href="leaning.html">หลักสูตร</a></li>
+            <li><a href="#facilities">สิ่งอำนวยความสะดวก</a></li>
+            <li><a href="techer.html">บุคลากร</a></li>
+            <li><a href="#contact">ติดต่อเรา</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <section id="about">
+            <h2>เกี่ยวกับแผนก</h2>
+            <div class="intro">
+                <div class="intro-text">
+                    <p>แผนกวิชาชีพเทคโนโลยีคอมพิวเตอร์เป็นหน่วยงานทางการศึกษาที่มุ่งเน้นการผลิตบุคลากรด้านเทคโนโลยีสารสนเทศที่มีคุณภาพและทักษะที่จำเป็นสำหรับตลาดแรงงานในยุคดิจิทัล</p>
+                    <p>เรามีหลักสูตรที่ทันสมัย พร้อมด้วยอุปกรณ์และเทคโนโลยีล่าสุด เพื่อให้นักเรียนได้เรียนรู้และพัฒนาทักษะอย่างเต็มที่</p>
+                    <p>สีประจำแผนกคือสีเทา ซึ่งสื่อถึงความมั่นคง ความเป็นมืออาชีพ และความทันสมัยในโลกเทคโนโลยี</p>
+                </div>
+                <div class="intro-image">
+                    <img src="image/tnc.png" alt="แผนกวิชาชีพเทคโนโลยีคอมพิวเตอร์">
+                </div>
+            </div>
+        </section>
+        
+        <section id="facilities">
+            <h2>สิ่งอำนวยความสะดวก</h2>
+            <div class="facilities">
+                <div class="facility">
+                    <i class="fas fa-desktop"></i>
+                    <h3>ห้องปฏิบัติการคอมพิวเตอร์</h3>
+                    <p>ห้องปฏิบัติการที่ทันสมัย พร้อมคอมพิวเตอร์ประสิทธิภาพสูงและซอฟต์แวร์ล่าสุด</p>
+                </div>
+                <div class="facility">
+                    <i class="fas fa-network-wired"></i>
+                    <h3>ห้องปฏิบัติการเครือข่าย</h3>
+                    <p>ห้องทดลองระบบเครือข่ายครบวงจร พร้อมอุปกรณ์จริงสำหรับการเรียนรู้</p>
+                </div>
+                <div class="facility">
+                    <i class="fas fa-book"></i>
+                    <h3>ศูนย์การเรียนรู้</h3>
+                    <p>แหล่งรวมหนังสือและสื่อการเรียนรู้ด้านเทคโนโลยีที่ทันสมัยและครบครัน</p>
+                </div>
+                <div class="facility">
+                    <i class="fas fa-wifi"></i>
+                    <h3>อินเทอร์เน็ตความเร็วสูง</h3>
+                    <p>ระบบอินเทอร์เน็ตความเร็วสูงครอบคลุมทั่วทั้งแผนก</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>ติดต่อเรา</h2>
+            <div class="contact-info">
+                <div class="contact-details">
+                    <h3>ข้อมูลการติดต่อ</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> ที่อยู่: วิทยาลัยเทคนิค ถนนเทคโนโลยี ตำบลกลางเมือง อำเภอเมือง จังหวัดเลย 42000</p>
+                    <p><i class="fas fa-phone"></i> โทรศัพท์: 02-345-6789</p>
+                    <p><i class="fas fa-envelope"></i> อีเมล: computer-tech@loeitech.ac.th</p>
+                    <p><i class="fas fa-clock"></i> เวลาเปิดทำการ: จันทร์ - ศุกร์ 08:30 - 16:30 น.</p>
+                    
+                    <h3 style="margin-top: 1.5rem;">ติดตามเราได้ที่</h3>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Line"><i class="fab fa-line"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>ส่งข้อความถึงเรา</h3>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="ชื่อ-นามสกุล" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="อีเมล" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="หัวข้อ" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea rows="5" placeholder="ข้อความ" required></textarea>
+                        </div>
+                        <button type="submit">ส่งข้อความ</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+    
+    <footer>
+        <p>แผนกวิชาชีพ เทคโนโลยีคอมพิวเตอร์ - สีประจำแผนก: สีเทา</p>
+        <p>© 2023 สถาบันวิชาชีพเทคนิค. สงวนลิขสิทธิ์.</p>
+    </footer>
+
+    <script>
+        // Back to top button functionality
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
